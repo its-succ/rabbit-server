@@ -2,7 +2,7 @@
   "name": "rabbit-server",
   "version": "1.0.0",
   "description": "Rabbit Web Server",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/its-succ/rabbit-server#readme",
   "dependencies": {
+    "body-parser": "^1.14.0",
     "express": "^4.13.3",
     "mongoose": "^4.1.6"
   }
