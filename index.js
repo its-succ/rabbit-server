@@ -1,8 +1,10 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
-var children = require('./children');
+app.use(bodyParser.json());
 
+var children = require('./children');
 app.use('/api/children', children);
 
 var server = app.listen(3000, function() {
