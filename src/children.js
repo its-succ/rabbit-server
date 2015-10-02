@@ -1,32 +1,63 @@
 var express = require('express');
+var Child = require('./child').Child;
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  res.json([{ name: '鈴木一郎', birthday: new Date(2013, 3, 1, 0, 0, 0, 0), sex: 'M' }]);
+  Child.find({}, function(err, docs) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.json(docs);
+    }
+  });
 });
 
 router.get('/:id', function(req, res) {
   var id = req.params.id;
-  console.log(id);
-  if (id == 1) {
-    res.json({ name: '鈴木一郎', birthday: new Date(2013, 3, 1, 0, 0, 0, 0), sex: 'M' });
-  } else {
-    res.sendStatus(404);
-  }
+  Child.findById(id, function(err, child) {
+    if (child) {
+      res.json(child);
+    } else {
+      res.sendStatus(404);
+    }
+  });
 });
 
 router.post('/', function(req, res) {
-  console.log(req.body);
-  res.json({req.body);
+  Child.on('error', function() {
+    res.sendStatus(500);
+  })
+  var child = new Child(req.body);
+  child.save(function(err, data) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.json(data);
+    }
+  });
 });
 
 router.put('/:id', function(req, res) {
-  console.log(req.body);
-  res.json(req.body);
+  var id = req.params.id;
+  var child = new Child(req.body);
+  Child.update({ _id: id}, { $set : {name: child.name, birthday: child.birthday, sex: child.sex} }, function(err, data) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.json(data);
+    }
+  });
 });
 
 router.delete('/:id', function(req, res) {
-  res.sendStatus(203);
+  var id = req.params.id;
+  Child.remove({ _id: id}, function(err) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(203);
+    }
+  });
 });
 
 module.exports = router;
