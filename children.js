@@ -31,4 +31,16 @@ router.post('/', function (req, res) {
   });
 });
 
+router.put('/:id', function (req, res) {
+  Child.update({_id: req.params.id}, req.body, {}, function (err, raw) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+
+    console.log(raw);
+    return res.send('Child updated.');
+  });
+});
+
 module.exports = router;
