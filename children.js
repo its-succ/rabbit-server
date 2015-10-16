@@ -1,14 +1,34 @@
 var express = require('express');
 var router = express.Router();
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test');
+
+var Child = mongoose.model('Child', { name: String, birthday: Date, sex: String });
+
 router.get('/:id', function (req, res) {
-  console.log('request received');
-  res.send('User No.' + req.params.id);
+  var id = req.params.id;
+  console.log('ID: ' + id);
+  Child.findById(id, function (err, child) {
+    if (child) {
+      res.json(child);
+    } else {
+      res.sendStatus(404);
+    }
+  });
 });
 
 router.post('/', function (req, res) {
-  console.log(req.body);
-  res.send(req.body);
+  var child = new Child(req.body);
+  child.save(function (err) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+
+    console.log(child);
+    return res.send('Child Registered. ID: ' + child._id);
+  });
 });
 
 module.exports = router;
