@@ -16,6 +16,16 @@ var Child = mongoose.model('Child', childSchma);
 
 var router = express.Router();
 
+router.get('/', function(req, res) {
+  Child.find(function(err, children) {
+    if (err || children == null) {
+      res.send(err);
+      return;
+    }
+    res.send(children);
+  });
+});
+
 router.get('/:id', function(req, res) {
   Child.findOne({_id:req.params.id}, function(err, child) {
     if (err || child === null) {
@@ -27,41 +37,25 @@ router.get('/:id', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  console.log(req.body);
-  var child = new Child();
-  child.name = req.body.name;
-  child.birthday = new Date(req.body.birthday);
-  child.sex = req.body.sex;
+  var child = new Child(req.body);
   child.save(function(err) {
     if (err) {
-      console.error(err);
       res.send(err);
       return;
     }
-    console.log("saved");
     res.send(child);
   })
 });
 
 router.put('/:id', function(req, res) {
-  console.log(req.body);
-  Child.findOne({_id:req.params.id}, function(err, child) {
+  var child = new Child(req.body);
+  child._id = req.params.id;
+  Child.findOneAndUpdate({_id:req.params.id}, child, {new: true}, function(err, child) {
     if (err || child === null) {
       res.send(err);
       return;
     }
-    child.name = req.body.name;
-    child.birthday = new Date(req.body.birthday);
-    child.sex = req.body.sex;
-    child.save(function(err) {
-      if (err) {
-        console.error(err);
-        res.send(err);
-        return;
-      }
-      console.log("saved");
-      res.send(child);
-    })
+    res.send(child);
   });
 });
 
@@ -72,7 +66,6 @@ router.delete('/:id', function(req, res) {
       return;
     }
     child.remove();
-    console.log("deleted")
     res.end();
   });
 });
