@@ -43,4 +43,14 @@ router.put('/:id', function (req, res) {
   });
 });
 
+router.delete('/:id', function (req, res) {
+  Child.remove({_id: req.params.id}, function (err) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    } else {
+      res.send('Child deleted.');
+    }
+  });
+});
 module.exports = router;
