@@ -24,10 +24,10 @@ router.post('/', function (req, res) {
     if (err) {
       console.error(err);
       res.sendStatus(500);
+    } else {
+      console.log(child);
+      res.send('Child Registered. ID: ' + child._id);
     }
-
-    console.log(child);
-    return res.send('Child Registered. ID: ' + child._id);
   });
 });
 
@@ -36,10 +36,10 @@ router.put('/:id', function (req, res) {
     if (err) {
       console.error(err);
       res.sendStatus(500);
+    } else {
+      console.log(raw);
+      res.send('Child updated.');
     }
-
-    console.log(raw);
-    return res.send('Child updated.');
   });
 });
 
