@@ -41,47 +41,41 @@ app.get('/api/children/:id', function (req, res) {
 
 // POST
 app.post('/api/children', function(req, res) {
-
-
-    var name = req.body.name;
-    var birthday = new Date(req.body.birthday);
-    var sex = req.body.sex;
-
-    console.log("create 1 record");
-    res.json({
-      "name": name,
-      "birthday": birthday,
-      "sex": sex
-    });
+  var child = new Child(req.body);
+  child.save(function (err) {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    res.send(child);
+  });
 
 });
 
 // PUT
 app.put('/api/children/:id', function (req, res) {
-  var name = req.body.name;
-  var birthday = new Date(req.body.birthday);
-  var sex = req.body.sex;
 
-  console.log("update 1 record");
-  res.json({
-    "name": name,
-    "birthday": birthday,
-    "sex": sex
+  var child = new Child(req.body);
+  child._id = req.params.id;
+  Child.findOneAndUpdate({_id:req.params.id}, {$set: child.name, birthday: child.birthday, sex: child.sex} , {new: true}, function(err, child) {
+    if (err || child === null) {
+      res.send(err);
+      return;
+    }
+    res.send(child);
   });
 
 });
 
 // DELETE
 app.delete('/api/children/:id', function (req, res) {
-  Child.remove({ _id: req.param("id") }, function(err) {
+  var id = req.params.id;
+  Child.remove({ _id: id }, function(err) {
           if (err) {
             res.send(err);
-            res.redirect('back');
-          } else {
-            res.redirect('/');
           }
       })
-  res.send('Delete : ' + 'id = ' + req.params.id);
+  res.send('Delete : ' + 'id = ' + id);
 });
 
 app.listen(3000);
