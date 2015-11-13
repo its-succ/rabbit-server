@@ -20,14 +20,6 @@ var ChildrenSchema = new mongoose.Schema({
 // モデルとして登録
 var Child = mongoose.model('Child',  ChildrenSchema);
 
-
-// //ルーティング設定
-// app.get('/', function (req, res) {
-//   res.send('Hello World');
-// });
-
-
-
 // GET
 app.get('/api/children/:id', function (req, res) {
   Child.findOne({_id:req.params.id}, function(err, child) {
@@ -56,15 +48,13 @@ app.post('/api/children', function(req, res) {
 app.put('/api/children/:id', function (req, res) {
 
   var child = new Child(req.body);
-  child._id = req.params.id;
-  Child.findOneAndUpdate({_id:req.params.id}, {$set: child.name, birthday: child.birthday, sex: child.sex} , {new: true}, function(err, child) {
+  Child.findOneAndUpdate({_id:req.params.id}, {$set: {name: child.name, birthday: child.birthday, sex: child.sex}} , {new: true}, function(err, child) {
     if (err || child === null) {
       res.send(err);
       return;
     }
     res.send(child);
   });
-
 });
 
 // DELETE
