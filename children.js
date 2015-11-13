@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
-
-var Child = mongoose.model('Child', { name: String, birthday: Date, sex: String });
+var Child = require('./child').Child;
+var Card = require('./card').Card;
 
 router.get('/:id', function (req, res) {
   var id = req.params.id;
