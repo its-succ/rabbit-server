@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Child = require('./child').Child;
 var Card = require('./card').Card;
+var Check = require('./check').Card;
 
 router.get('/:id', function (req, res) {
   var id = req.params.id;
