@@ -1,0 +1,30 @@
+@startuml
+
+class Child {
+
+  name: String
+  birthday: Date
+  sex: String
+}
+
+class Card {
+  cardId: String
+  description: String
+}
+
+Child "*" - "*" Card
+
+
+class Check {
+  time: Date
+}
+
+class CheckHistory {
+  child: Child
+  attend: Check
+  leave: Check
+}
+
+CheckHistory -> Check
+
+@enduml
