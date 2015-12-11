@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var cardSchema = require('./card').cardSchema;
-
-var checkSchema = new Schema({ card: [cardSchema], time: Date });
+var checkSchema = new Schema({
+    card: [{ type: Schema.Types.ObjectId, ref: 'Card' }],
+    time: Date
+});
 var Check = mongoose.model('Check', checkSchema);
 
 module.exports.checkSchema = checkSchema;
