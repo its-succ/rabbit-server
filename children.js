@@ -37,9 +37,10 @@ exports.findAll = function(req, res) {
       console.log('園児一覧取得成功しました' + results);
       res.json(results);
     }
-  })
+  });
 };
 
+//取得
 exports.findbyId = function(req, res) {
   var id = req.params.id;
   console.log('園児取得' + id);
@@ -51,5 +52,54 @@ exports.findbyId = function(req, res) {
       console.log('園児取得成功しました' + JSON.stringify(result));
       res.json(result);
     }
-  })
+  });
+};
+
+//登録
+exports.addChild = function(req, res) {
+  var child = req.body;
+  console.log('園児登録' + child);
+
+  var addchild = new Child(child);
+  addchild.save(function(err, result) {
+    if(err) {
+      res.send({'error': 'エラーがおきました'});
+    } else {
+      console.log('園児登録完了しました' + JSON.stringify(result));
+      res.json(result);
+    }
+  });
+};
+
+//変更
+exports.updateChild = function(req, res) {
+  var id = req.params.id;
+  console.log('園児変更' + id);
+
+  var child = req.body;
+  delete child._id;
+  //console.log('Child  ' + Child);
+  Child.findByIdAndUpdate(id, child, function(err, result) {
+    if(err) {
+      res.send({'error': 'エラーがおきました'});
+    } else {
+      console.log('園児変更しました' + JSON.stringify(result));
+      res.send(child);
+    }
+  });
+};
+
+//削除
+exports.deleteChild = function(req, res) {
+  var id = req.params.id;
+  console.log('園児削除' + id);
+
+  Child.findByIdAndRemove(id, function(err, result) {
+    if(err) {
+      res.send({'error': 'エラーがおきました'});
+    } else {
+      console.log('園児削除しました' + JSON.stringify(result));
+      res.send(req.body);
+    }
+  });
 };
