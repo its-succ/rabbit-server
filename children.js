@@ -1,20 +1,7 @@
 var express = require('express');
-var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/children');
-var db = mongoose.connection;
-db.once('open', function(callback) {
-  console.log('db connected');
-});
-
-var childSchma = mongoose.Schema({
-  name: String,
-  birthday: Date,
-  sex: String
-});
-var Child = mongoose.model('Child', childSchma);
-
 var router = express.Router();
+
+var Child = require('./models/Child');
 
 router.get('/', function(req, res) {
   Child.find(function(err, children) {
