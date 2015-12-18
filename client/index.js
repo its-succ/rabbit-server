@@ -4,10 +4,10 @@ const m = require('mithril');
 
 const Home = {
   view: () => {
-    return m('div', [
-      m('h1', 'Rabbit'),
-      m('p', 'Welcome to Rabbit')
-    ]);
+    return <div>
+            <h1>Rabbit</h1>
+            <p>Welcome to Rabbit</p>
+           </div>;
   }
 };
 
