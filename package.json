@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint .",
     "clean": "rimraf public/javascripts",
     "initialize": "mkdirp public/javascripts",
     "build:js": "browserify client/index.js -t babelify -o public/javascripts/bundle.js",
@@ -39,6 +39,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "eslint": "^1.10.3",
     "mkdirp": "^0.5.1",
     "npm-run-all": "^1.4.0",
     "rimraf": "^2.4.4"
