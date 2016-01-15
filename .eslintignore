@@ -1,0 +1,4 @@
+# node_modules ignored by default
+
+# Ignore built files except javascripts/bundle.js
+public/javascripts/**/*.js
