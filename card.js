@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var cardSchema = new Schema({
-    nfcId: String,
-    author: String,
+    _id: String,
+    owner: String,
     children: [{type: Schema.Types.ObjectId, ref: 'Child' }]
 });
 var Card = mongoose.model('Card', cardSchema);
