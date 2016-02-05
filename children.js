@@ -1,13 +1,23 @@
 var express = require('express');
 var router = express.Router();
 
+var strftime = require('strftime');
+
 var Child = require('./child').Child;
 var Card = require('./card').Card;
 
 router.get('/', function (req, res) {
-  Child.find({}, '_id name birthday sex', function (err, children) {
+  Child.find({}, function (err, children) {
     if (children) {
-      res.json(children);
+      var childrenJson = children.map(function (child) {
+        return {
+          _id: child._id,
+          name: child.name,
+          birthday: strftime('%F', child.birthday),
+          sex: child.sex
+        };
+      });
+      res.json(childrenJson);
     } else {
       res.sendStatus(404);
     }
@@ -19,12 +29,11 @@ router.get('/:id', function (req, res) {
   console.log('ID: ' + id);
   Child.findById(id, function (err, child) {
     if (child) {
-      Card.find({ children: id }, function(err, cards) {
-        child.cards = cards;
+      Card.find({ children: id }, '_id owner children', function(err, cards) {
         res.json({
           _id: child._id,
           name: child.name,
-          birthday: child.birthday,
+          birthday: strftime('%F', child.birthday),
           sex: child.sex,
           cards: cards
         });
