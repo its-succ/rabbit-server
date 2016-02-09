@@ -32,6 +32,7 @@
     "mithril": "^0.2.0",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
+    "purecss": "^0.6.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
