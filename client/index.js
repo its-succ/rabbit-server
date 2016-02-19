@@ -1,6 +1,7 @@
 'use strict';
 
 const m = require('mithril');
+const Child = require('./children');
 
 const Home = {
   view: () => {
@@ -12,5 +13,6 @@ const Home = {
 };
 
 m.route(document.getElementById('root'), '/', {
-  '/': Home
+  '/': Home,
+  '/child': Child,
 });
