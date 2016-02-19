@@ -14,3 +14,5 @@ before_install:
 notifications:
   webhooks:
     - https://idobata.io/hook/travis_ci/2e21933d-e4f5-4b9f-bc7f-b528da5b7f58
+services:
+  - mongodb
