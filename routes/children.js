@@ -3,8 +3,8 @@ var router = express.Router();
 
 var strftime = require('strftime');
 
-var Child = require('./child').Child;
-var Card = require('./card').Card;
+var Child = require('../models/child');
+var Card = require('../models/card');
 
 router.get('/', function (req, res) {
   Child.find({}, function (err, children) {
