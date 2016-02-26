@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "eslint .",
+    "lint": "eslint .",
+    "unittest": "mocha",
+    "test": "npm-run-all lint unittest",
     "clean": "rimraf public/javascripts",
     "initialize": "mkdirp public/javascripts",
     "build:js": "browserify client/index.js -t babelify -o public/javascripts/bundle.js",
@@ -43,9 +45,10 @@
     "browserify": "^13.0.0",
     "eslint": "^2.0.0",
     "mkdirp": "^0.5.1",
+    "mocha": "^2.4.5",
     "npm-run-all": "^1.4.0",
     "rimraf": "^2.4.4",
-    "supertest": "^1.2.0",
+    "supertest": "^1.1.0",
     "watchify": "^3.7.0"
   }
 }
