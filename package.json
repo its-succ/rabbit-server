@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "lint": "eslint .",
-    "unittest": "mocha",
+    "unittest": "NODE_ENV=test mocha",
     "test": "npm-run-all lint unittest",
     "clean": "rimraf public/javascripts",
     "initialize": "mkdirp public/javascripts",
@@ -27,10 +27,12 @@
   "homepage": "https://github.com/its-succ/rabbit-server#readme",
   "dependencies": {
     "body-parser": "^1.13.2",
+    "config": "^1.19.0",
     "cookie-parser": "^1.4.1",
     "debug": "^2.2.0",
     "ejs": "^2.3.3",
     "express": "^4.13.3",
+    "js-yaml": "^3.5.3",
     "mithril": "^0.2.0",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
