@@ -3,33 +3,40 @@ var router = express.Router();
 
 var strftime = require('strftime');
 
-var Child = require('../models/child');
-var Card = require('../models/card');
+var Child = require('../models/Child');
+var Card = require('../models/Card');
 
-router.get('/', function (req, res) {
-  Child.find({}, function (err, children) {
+router.get('/', (req, res) => {
+  Child.find({}, (err, children) => {
+    if (err) {
+      return res.send(err);
+    }
+
     if (children) {
-      var childrenJson = children.map(function (child) {
+      var response = children.map(child => {
         return {
           _id: child._id,
           name: child.name,
           birthday: strftime('%F', child.birthday),
-          sex: child.sex
+          sex: child.sex,
         };
       });
-      res.json(childrenJson);
+      res.json(response);
     } else {
       res.sendStatus(404);
     }
   });
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:id', (req, res) => {
   var id = req.params.id;
-  console.log('ID: ' + id);
-  Child.findById(id, function (err, child) {
+  Child.findById(id, (err, child) => {
+    if (err) {
+      return res.send(err);
+    }
+
     if (child) {
-      Card.find({ children: id }, '_id owner children', function(err, cards) {
+      Card.find({ children: id }, '_id owner children', (err, cards) => {
         res.json({
           _id: child._id,
           name: child.name,
@@ -44,36 +51,48 @@ router.get('/:id', function (req, res) {
   });
 });
 
-router.post('/', function (req, res) {
+router.post('/', (req, res) => {
   var child = new Child(req.body);
-  child.save(function (err) {
+  child.save(err => {
     if (err) {
-      console.error(err);
-      res.sendStatus(500);
+      res.send(err);
+    }
+    child.birthday = strftime('%F', child.birthday);
+    res.json({
+      _id: child._id,
+      name: child.name,
+      birthday: strftime('%F', child.birthday),
+      sex: child.sex
+    });
+  });
+});
+
+router.put('/:id', (req, res) => {
+  var id = req.params.id;
+  Child.findByIdAndUpdate(id, req.body, {new: true}, (err, child) => {
+    if (err) {
+      res.send(err);
+    }
+    if (child) {
+      Card.find({ children: id }, '_id owner children', (err, cards) => {
+        res.json({
+          _id: child._id,
+          name: child.name,
+          birthday: strftime('%F', child.birthday),
+          sex: child.sex,
+          cards: cards
+        });
+      });
     } else {
-      console.log(child);
-      res.sendStatus(200);
+      res.sendStatus(404);
     }
   });
 });
 
-router.put('/:id', function (req, res) {
-  Child.findByIdAndUpdate(req.params.id, req.body, function (err, child) {
+router.delete('/:id', (req, res) => {
+  Child.findByIdAndRemove(req.params.id, err => {
     if (err) {
-      console.error(err);
-      res.sendStatus(500);
-    } else {
-      console.log(child);
-      res.sendStatus(200);
-    }
-  });
-});
-
-router.delete('/:id', function (req, res) {
-  Child.findByIdAndRemove(req.params.id, function (err) {
-    if (err) {
-      console.error(err);
-      res.sendStatus(500);
+      res.send(err);
     } else {
       res.sendStatus(200);
     }
