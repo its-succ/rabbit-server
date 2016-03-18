@@ -9,11 +9,13 @@ describe('API /api/children', () => {
   before(done => {
     // DB接続待機
     mongoose.connection.on('connected', () => {
-      done();
+      Child.remove({}, err => {
+        done();
+      });
     });
   });
 
-  beforeEach(done => {
+  afterEach(done => {
     Child.remove({}, err => {
       done();
     });
@@ -134,7 +136,6 @@ describe('API /api/children', () => {
                 .end(done);
             });
         });
-        done();
     });
   });
 
