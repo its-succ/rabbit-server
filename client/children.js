@@ -2,19 +2,24 @@
 
 const m = require('mithril');
 
+
 class ChildListModel {
   constructor() {
-    this.id = m.prop('');
-    this.name = m.prop('');
-    this.sex = m.prop('');
-    this.childList = m.prp([]);
+    // this.id = m.prop('');
+    // this.name = m.prop('');
+    // this.birthday = m.prop('');
+    // this.sex = m.prop('');
+    this.childList = m.prop({});
   }
 
   loadChildList() {
     this.childList = m.request({
       method: 'GET',
-      url: '/children/:id'
+      url: '/children',
+      //initialValue: []
     });
+    // .then(console.log('++++++++', this.childList()));
+    //リクエストが返ってくるのを待つ方法があるはず
   }
 }
 
@@ -22,14 +27,16 @@ class ChildListController {
   constructor() {
     this.vm = new ChildListModel();
     this.vm.loadChildList();
+    //console.log('**********', this.vm.childList());
   }
 }
 
 const Component = {
   controller: ChildListController,
-  view: () => {
+  view: ctrl => {
     return <div>
             <h1>園児一覧</h1>
+            childList:{ctrl.vm.childList()}
             <table class="pure-table">
                 <thead>
                     <tr>
