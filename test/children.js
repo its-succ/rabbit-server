@@ -51,40 +51,49 @@ describe('API /api/children', () => {
   });
 
   it('園児一人の情報を取得できる', done => {
-    var cardReq = {
-      _id: '123456',
-      owner: 'hoge',
-      children: [id]
-    };
+    // 古いテストデータ（カード）を削除する
+    Card.remove({}, err => {
+      if (err) {
+        done(err);
+      }
 
-    var r = request(app);
+      var cardReq = {
+        _id: '123456',
+        owner: 'hoge',
+        children: [id]
+      };
 
-    r.post('/api/cards')
-      .send(cardReq)
-      .expect(200)
-      .expect(res => {
-        res.body.should.have.property('_id', '123456');
-        res.body.should.have.property('owner', 'hoge');
-        res.body.should.have.property('children', [id]);
-        console.log(res.body);
-      });
+      // カード登録
+      request(app)
+        .post('/api/cards')
+        .send(cardReq)
+        .expect(200)
+        .expect(res => {
+          res.body.should.have.property('_id', '123456');
+          res.body.should.have.property('owner', 'hoge');
+          res.body.should.have.property('children', [id]);
+        })
+        .end((err, cardRes) => {
+          // 園児取得
+          request(app)
+            .get('/api/children/' + id)
+            .expect(200)
+            .expect(res => {
+              res.body.should.have.property('name', '鈴木一郎');
+              res.body.should.have.property('birthday', '2013-04-01');
+              res.body.should.have.property('sex', 'M');
+              res.body.should.have.property('cards');
+              res.body.cards.length.should.equal(1);
 
-    r.get('/api/children/' + id)
-      .expect(200)
-      .expect(res => {
-        res.body.should.have.property('name', '鈴木一郎');
-        res.body.should.have.property('birthday', '2013-04-01');
-        res.body.should.have.property('sex', 'M');
-        res.body.should.have.property('cards');
-        console.log(res.body);
-        res.body.cards.length.should.equal(1);
-
-        var card = res.body.cards[0];
-        card.should.have.property('_id', '123456');
-        card.should.have.property('owner', 'hoge');
-        card.should.have.property('children', [id]);
-      })
-      .end(done);
+              var card = res.body.cards[0];
+              card.should.have.property('_id', '123456');
+              card.should.have.property('owner', 'hoge');
+              card.should.have.property('children', [id]);
+            })
+            .end(done);
+        });
+      done();
+    });
   });
 
   it('園児を更新できる', done => {
