@@ -13,8 +13,9 @@ addons:
 before_install:
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
   - $CXX --version
-notifications:
-  webhooks:
-    - https://idobata.io/hook/travis_ci/2e21933d-e4f5-4b9f-bc7f-b528da5b7f58
 services:
   - mongodb
+notifications:
+  webhooks:
+    urls:
+      secure: kKxxwDf00GZjeq/HjTpl/C0CbG0j2K15IacW+KBG/Ah1zX/5ixWJ14GqINZRQmUBLsUbYAKt5BK1cQefwHrPP5SuXeCqkulRtaRwvDY0IddgSGSHDelpdlTAU9Hll8OaftVSfFhnZ00QKzjhhvOWMjT15sTNTW512PSzBmHDhqa61GBMxRYy5v3DajZOyPf59kyeUxqqNceV/1pmSe2997KQ/5v72y/++V/gpiKbGCCj91cVDZwtSHaHDze0wh7+00kZWPNlqNRgG7wkBYmUhLDYWarHdCRmSv1sJycVDOWXWySvsh52M4mtU44ZUPyJR/f3e4NjZBDT7+dacyjSOcEyljnFeTsA+qIbsg7bwEq3EJnm0Yzcp2hocPLa/UM1y3pc6Wm+GoTILKosaTd1w9a0dELECh7/ljnPGcNBrIYTZxiQomU9rZ1oow8roG1ZjSEF0n3jISD0XQnRoZMZEHPfdBD9Pnx/chvlegqbCfsw6s5CrVUKLsv97255Xn1RlPsWo5s4dAXhXFXxrTHeYzAj4ZTCy1tv3ZJlJK3ixxNnOW80OhZzcCVMclmrfrVDALuJ9hKaem94RIboeRgUJn15EAeKIBjhdYqIJML50Zn7vhbGVMFEtLDs4CnkgTQDPs6dzNjuGJ32l7cwWx3kw/vUQ3tAdAY7GTIul6rszfE=
