@@ -6,7 +6,6 @@ var Card = require('../models/Card')
 describe('API /api/cards', () => {
   before(done => {
     // 事前にコレクションを空にしておく
-    // TODO: UT用のDBに切り替えるには？
     mongoose.connection.on('connected', () => {
       Card.remove({}, err => {
         done();
