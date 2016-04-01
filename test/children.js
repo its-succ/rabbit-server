@@ -1,5 +1,5 @@
 var request = require('supertest');
-var should = require('should');
+var should = require('chai').should();
 var app = require('../app');
 var mongoose = require('mongoose');
 var Child = require('../models/Child');
@@ -7,12 +7,17 @@ var Card = require('../models/Card');
 
 describe('API /api/children', () => {
   before(done => {
-    // DB接続待機
-    mongoose.connection.on('connected', () => {
+    const func = () => {
       Child.remove({}, err => {
         done();
       });
-    });
+    };
+
+    if (mongoose.connection.readyState == 1) {
+      func();
+    } else {
+      mongoose.connection.on('connected', func);
+    }
   });
 
   afterEach(done => {
@@ -40,7 +45,6 @@ describe('API /api/children', () => {
   });
 
   it('園児の一覧を取得できる', done => {
-    var id;
     var req = {
       name: '鈴木一郎',
       birthday: '2013-04-01',
@@ -55,8 +59,6 @@ describe('API /api/children', () => {
         res.body.should.have.property('name', '鈴木一郎');
         res.body.should.have.property('birthday', '2013-04-01');
         res.body.should.have.property('sex', 'M');
-
-        id = res.body._id;
       })
       .end((err, cardRes) => {
         // 園児一覧取得
@@ -93,7 +95,6 @@ describe('API /api/children', () => {
         .send(childReq)
         .expect(200)
         .expect(res => {
-          console.log(res.body);
           res.body.should.have.property('name', '鈴木一郎');
           res.body.should.have.property('birthday', '2013-04-01');
           res.body.should.have.property('sex', 'M');
@@ -126,12 +127,11 @@ describe('API /api/children', () => {
                   res.body.should.have.property('birthday', '2013-04-01');
                   res.body.should.have.property('sex', 'M');
                   res.body.should.have.property('cards');
-                  res.body.cards.length.should.equal(1);
-    
-                  var card = res.body.cards[0];
-                  card.should.have.property('_id', '123456');
-                  card.should.have.property('owner', 'hoge');
-                  card.should.have.property('children', [id]);
+                  res.body.should.have.deep.property('cards.length', 1);
+                  res.body.should.have.deep.property('cards[0]._id', '123456');
+                  res.body.should.have.deep.property('cards[0].owner', 'hoge');
+                  res.body.should.have.deep.property('cards[0].children.length', 1);
+                  res.body.should.have.deep.property('cards[0].children[0]', id);
                 })
                 .end(done);
             });

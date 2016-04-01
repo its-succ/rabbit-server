@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
           _id: child._id,
           name: child.name,
           birthday: strftime('%F', child.birthday),
-          sex: child.sex,
+          sex: child.sex
         };
       });
       res.json(response);
