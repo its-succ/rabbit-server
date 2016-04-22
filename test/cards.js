@@ -5,12 +5,19 @@ var Card = require('../models/Card')
 
 describe('API /api/cards', () => {
   before(done => {
-    // 事前にコレクションを空にしておく
-    mongoose.connection.on('connected', () => {
+    const func = () => {
+      // 事前にコレクションを空にしておく
       Card.remove({}, err => {
         done();
       });
-    });
+    };
+    if (mongoose.connection.readyState == 1) {
+      // 接続済
+      func();
+    } else {
+      // 接続を待つ
+      mongoose.connection.on('connected', func);
+    }
   });
 
   it('カードが登録できる', done => {
