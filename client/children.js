@@ -56,7 +56,6 @@ const Component = {
                             </tr>;
                   })}
                 </tbody>
-
             </table>
            </div>;
   }
