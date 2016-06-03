@@ -15,8 +15,7 @@ class ChildListModel {
   loadChildList() {
     this.childList = m.request({
       method: 'GET',
-      url: '/children',
-      //initialValue: []
+      url: '/children'
     });
   }
 }

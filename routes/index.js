@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 var childSchema = new mongoose.Schema({
   name: {type: String},
   birthday: {type: Date},
-  sex: {type: String}
+  sex: {type: String},
 })
 //モデル化
 var Child = mongoose.model('Child', childSchema);
@@ -22,12 +22,11 @@ var Child = mongoose.model('Child', childSchema);
 //mongoDB使用
 mongoose.connect('mongodb://localhost/test');
 mongoose.connection.on('connected', function() {
-  console.log('mongoose URI locates' + 'mongodb://localhost/test');
+  //console.log('mongoose URI locates' + 'mongodb://localhost/test');
 })
 
 //一覧取得
 router.get('/children', function(req, res) {
-  console.log('園児一覧取得');
 
   Child.find({}, function(err, results) {
     if(err) {
@@ -39,19 +38,5 @@ router.get('/children', function(req, res) {
      }
   })
 });
-
-
-
-//登録
-// var child = new Child();
-// child.name ='テスト　太郎';
-// child.birthday = '2010-03-12';
-// child.sex = 'M';
-// child.save(function(err) {
-//   if(err) {console.log(err);}
-// });
-
-
-
 
 module.exports = router;
