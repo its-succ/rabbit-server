@@ -47,16 +47,16 @@ const Component = {
                 </thead>
 
                 <tbody>
-                  <tr>
                   {ctrl.vm.childList().map(child => {
-                    return  <td>{child._id}</td>;
+                    return <tr>
+                             <td>{child._id}</td>
+                             <td>{child.name}</td>
+                             <td>{child.birthday}</td>
+                             <td>{child.sex}</td>
+                             <td></td>
+                           </tr>;
                   })}
-                  {ctrl.vm.childList().map(child => {
-                    return  <td>{child.name}</td>;
-                  })}
-                  </tr>
                 </tbody>
-
             </table>
            </div>;
   }
