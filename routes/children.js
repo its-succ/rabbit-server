@@ -12,19 +12,19 @@ router.get('/', (req, res) => {
       return res.send(err);
     }
 
-    if (children) {
-      var response = children.map(child => {
-        return {
-          _id: child._id,
-          name: child.name,
-          birthday: strftime('%F', child.birthday),
-          sex: child.sex
-        };
-      });
-      res.json(response);
-    } else {
+    if (!children) {
       res.sendStatus(404);
     }
+
+    var response = children.map(child => {
+      return {
+        _id: child._id,
+        name: child.name,
+        birthday: strftime('%Y-%m-%d', child.birthday),
+        sex: child.sex
+      };
+    });
+    res.json(response);
   });
 });
 
@@ -35,19 +35,19 @@ router.get('/:id', (req, res) => {
       return res.send(err);
     }
 
-    if (child) {
-      Card.find({ children: id }, '_id owner children', (err, cards) => {
-        res.json({
-          _id: child._id,
-          name: child.name,
-          birthday: strftime('%F', child.birthday),
-          sex: child.sex,
-          cards: cards
-        });
-      });
-    } else {
+    if (!child) {
       res.sendStatus(404);
     }
+
+    Card.find({ children: id }, '_id owner children', (err, cards) => {
+      res.json({
+        _id: child._id,
+        name: child.name,
+        birthday: strftime('%Y-%m-%d', child.birthday),
+        sex: child.sex,
+        cards: cards
+      });
+    });
   });
 });
 
@@ -57,11 +57,10 @@ router.post('/', (req, res) => {
     if (err) {
       res.send(err);
     }
-    child.birthday = strftime('%F', child.birthday);
     res.json({
       _id: child._id,
       name: child.name,
-      birthday: strftime('%F', child.birthday),
+      birthday: strftime('%Y-%m-%d', child.birthday),
       sex: child.sex
     });
   });
@@ -73,19 +72,19 @@ router.put('/:id', (req, res) => {
     if (err) {
       res.send(err);
     }
-    if (child) {
-      Card.find({ children: id }, '_id owner children', (err, cards) => {
-        res.json({
-          _id: child._id,
-          name: child.name,
-          birthday: strftime('%F', child.birthday),
-          sex: child.sex,
-          cards: cards
-        });
-      });
-    } else {
+
+    if (!child) {
       res.sendStatus(404);
     }
+
+    Card.find({ children: id }, '_id owner children', (err, cards) => {
+      res.json({
+        _id: child._id,
+        name: child.name,
+        birthday: strftime('%Y-%m-%d', child.birthday),
+        sex: child.sex
+      });
+    });
   });
 });
 
