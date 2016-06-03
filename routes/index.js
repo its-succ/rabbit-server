@@ -33,9 +33,9 @@ router.get('/children', function(req, res) {
     if(err) {
       res.send({'error': 'エラーがおきました'});
     } else {
-       console.log('園児一覧取得成功しました' + results);
-      //  res.json(results);
-       res.send(results);
+       //console.log('園児一覧取得成功しました' + results);
+       res.json(results);
+       //res.send(results);
      }
   })
 });
