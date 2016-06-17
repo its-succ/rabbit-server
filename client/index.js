@@ -14,5 +14,5 @@ const Home = {
 
 m.route(document.getElementById('root'), '/', {
   '/': Home,
-  '/child': Child,
+  '/child': Child
 });

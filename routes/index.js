@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 var childSchema = new mongoose.Schema({
   name: {type: String},
   birthday: {type: Date},
-  sex: {type: String},
+  sex: {type: String}
 })
 //モデル化
 var Child = mongoose.model('Child', childSchema);
