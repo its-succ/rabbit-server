@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "eslint .",
+    "lint": "eslint .",
+    "unittest": "cross-env NODE_ENV=test mocha",
+    "test": "npm-run-all lint unittest",
     "clean": "rimraf public/javascripts",
     "initialize": "mkdirp public/javascripts",
     "build:js": "browserify client/index.js -t babelify -o public/javascripts/bundle.js",
@@ -25,25 +27,30 @@
   "homepage": "https://github.com/its-succ/rabbit-server#readme",
   "dependencies": {
     "body-parser": "^1.13.2",
+    "config": "^1.19.0",
     "cookie-parser": "^1.4.1",
     "debug": "^2.2.0",
     "ejs": "^2.3.3",
     "express": "^4.13.3",
-    "mithril": "^0.2.0",
+    "js-yaml": "^3.6.1",
+    "mithril": "^0.2.3",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
     "purecss": "^0.6.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
-    "babel-plugin-mjsx": "^4.0.0",
+    "babel-plugin-mjsx": "^4.1.1",
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "eslint": "^1.10.3",
+    "cross-env": "^1.0.7",
+    "eslint": "^2.5.0",
     "mkdirp": "^0.5.1",
-    "npm-run-all": "^1.4.0",
+    "mocha": "^2.4.5",
+    "npm-run-all": "^2.1.1",
     "rimraf": "^2.4.4",
+    "supertest": "^1.1.0",
     "watchify": "^3.7.0"
   }
 }
