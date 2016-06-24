@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     }
 
     if (!children) {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
 
     var response = children.map(child => {
@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
     }
 
     if (!child) {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
 
     Card.find({ children: id }, '_id owner children', (err, cards) => {
@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
   var child = new Child(req.body);
   child.save(err => {
     if (err) {
-      res.send(err);
+      return res.send(err);
     }
     res.json({
       _id: child._id,
@@ -70,11 +70,11 @@ router.put('/:id', (req, res) => {
   var id = req.params.id;
   Child.findByIdAndUpdate(id, req.body, {new: true}, (err, child) => {
     if (err) {
-      res.send(err);
+      return res.send(err);
     }
 
     if (!child) {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
 
     Card.find({ children: id }, '_id owner children', (err, cards) => {
