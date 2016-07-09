@@ -2,7 +2,6 @@
 
 const m = require('mithril');
 
-
 class ChildListModel {
   constructor() {
     this.id = m.prop('');
@@ -15,15 +14,35 @@ class ChildListModel {
   loadChildList() {
     this.childList = m.request({
       method: 'GET',
-      url: '/children'
+      url: '/api/children',
+      initialValue: []
     });
   }
 }
 
+const model = new ChildListModel();
+
 class ChildListController {
   constructor() {
-    this.vm = new ChildListModel();
+    this.vm = model;
     this.vm.loadChildList();
+  }
+
+  add() {
+    m.route('/children/new');
+  }
+
+  edit(id) {
+    m.route(`/children/${id}`);
+  }
+
+  delete(id) {
+    return m.request({
+      method: 'DELETE',
+      url: `/api/children/${id}`
+    }).then(data => {
+      return this.vm.loadChildList();
+    });
   }
 }
 
@@ -52,11 +71,18 @@ const Component = {
                               <td>{child.name}</td>
                               <td>{child.sex}</td>
                               <td>{formatDate(new Date(child.birthday), 'YYYY/MM/DD')}</td>
-                              <td><button onclick="">Edit</button></td>
+                              <td>
+                                <button class="pure-button" onclick={ctrl.edit.bind(ctrl, child._id)}>編集</button>
+                                { }
+                                <button class="pure-button" onclick={ctrl.delete.bind(ctrl, child._id)}>削除</button>
+                              </td>
                             </tr>;
                   })}
                 </tbody>
             </table>
+            <div>
+              <button class="pure-button" onclick={ctrl.add.bind(ctrl)}>追加</button>
+            </div>
            </div>;
   }
 };

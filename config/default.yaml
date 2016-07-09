@@ -1,2 +1,2 @@
 db:
-  host: 'mongodb://localhost/test'
+  host: 'mongodb://192.168.33.13/test'

@@ -11,13 +11,15 @@
     "es6": true,
     "node": true,
     "browser": true,
-    "mocha": true
+    "mocha": true,
+    "jquery": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
       "jsx": true
-    }
+    },
+    "sourceType": "module"
   }
 }

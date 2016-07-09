@@ -2,6 +2,7 @@
 
 const m = require('mithril');
 const Child = require('./children');
+const NewChild = require('./children/new');
 
 const Home = {
   view: () => {
@@ -12,7 +13,8 @@ const Home = {
   }
 };
 
-m.route(document.getElementById('root'), '/', {
+m.route(document.getElementById('root'), '/children', {
   '/': Home,
-  '/child': Child
+  '/children': Child,
+  '/children/:childId': NewChild
 });
