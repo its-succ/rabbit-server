@@ -33,7 +33,7 @@
     "ejs": "^2.3.3",
     "express": "^4.13.3",
     "js-yaml": "^3.6.1",
-    "mithril": "^0.2.3",
+    "mithril": "^0.2.5",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
     "purecss": "^0.6.0",
