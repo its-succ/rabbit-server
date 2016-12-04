@@ -9,8 +9,9 @@ class Child {
 
   reflect(data) {
     data = data || {};
-    this.id = m.prop(data._id);
-    this.name = m.prop(data.name || '');
+    this.id = m.prop(data.id);
+    this.firstName = m.prop(data.firstName || '');
+    this.lastName = m.prop(data.lastName || '');
     this.birthday = m.prop(data.birthday || '');
     this.sex = m.prop(data.sex || '');
   }
@@ -29,7 +30,8 @@ class Child {
         method: 'PUT',
         url: `/api/children/${this.id()}`,
         data: {
-          name: this.name(),
+          firstName: this.firstName(),
+          lastName: this.lastName(),
           birthday: this.birthday(),
           sex: this.sex()
         }
@@ -41,7 +43,8 @@ class Child {
         method: 'POST',
         url: '/api/children',
         data: {
-          name: this.name(),
+          firstName: this.firstName(),
+          lastName: this.lastName(),
           birthday: this.birthday(),
           sex: this.sex()
         }

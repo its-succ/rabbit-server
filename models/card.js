@@ -2,7 +2,7 @@
 
 module.exports = function (sequelize, DataTypes) {
   const card = sequelize.define('card', {
-    card_number: {
+    cardNumber: {
       allowNull: false,
       type: DataTypes.STRING
     }

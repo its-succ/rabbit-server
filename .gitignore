@@ -7,3 +7,5 @@ Thumbs.db
 
 # javascript build output directory
 public/javascripts
+
+*.sqlite

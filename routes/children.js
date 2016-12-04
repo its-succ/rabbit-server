@@ -51,9 +51,9 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id;
-  return sequelize.transaction({}, t => {
-    models.child.findById(id, {transaction: t}).then(child => {
-      return child.updates(req.body);
+  return sequelize.transaction(t => {
+    return models.child.findById(id, {transaction: t}).then(child => {
+      return child.update(req.body, {transaction: t});
     });
   }).then(child => {
     res.json({
@@ -70,12 +70,12 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
-  return sequelize.transaction({}, t => {
-    models.child.findById(id, {transaction: t}).then(child => {
+  return sequelize.transaction(t => {
+    return models.child.findById(id, {transaction: t}).then(child => {
       return child.destroy({transaction: t});
     });
   }).then(() => {
-    res.sendStatus(200);
+    res.status(200).end();
   }).catch(function(err) {
     return res.send(err);
   });

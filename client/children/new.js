@@ -45,9 +45,14 @@ const New = {
             <form class="pure-form pure-form-aligned">
               <fieldset>
               <div class="pure-control-group">
-                <label for="name">名前</label>
-                <input id="name" type="text" placeholder="名前"
-                value={child.name()} onchange={m.withAttr('value', child.name)}/>
+                <label for="lastName">姓</label>
+                <input id="lastName" type="text" placeholder="姓"
+                value={child.lastName()} onchange={m.withAttr('value', child.lastName)}/>
+              </div>
+              <div class="pure-control-group">
+                <label for="firstName">名</label>
+                <input id="firstName" type="text" placeholder="名"
+                value={child.firstName()} onchange={m.withAttr('value', child.firstName)}/>
               </div>
               <div class="pure-control-group">
                 <label for="sex">性別</label>

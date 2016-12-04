@@ -2,11 +2,11 @@
 
 module.exports = function (sequelize, DataTypes) {
   const child = sequelize.define('cardChild', {
-    first_name: {
+    firstName: {
       allowNull: false,
       type: DataTypes.STRING
     },
-    last_name: {
+    lastName: {
       allowNull: false,
       type: DataTypes.STRING
     },

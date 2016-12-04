@@ -1,0 +1,8 @@
+fixtures:
+  - model: child
+    data:
+      id: -1
+      firstName: 花子
+      lastName: 山田
+      sex: M
+      birthday: 2015-11-11

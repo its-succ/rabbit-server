@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'child';
+const tableName = 'children';
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -8,6 +8,7 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: Sequelize.INTEGER
       },
       firstName: {
