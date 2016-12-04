@@ -1,100 +1,83 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const strftime = require('strftime');
+const models = require('../models');
 
-var strftime = require('strftime');
-
-var Child = require('../models/Child');
-var Card = require('../models/Card');
+const sequelize = models.sequelize;
+const router = express.Router();
 
 router.get('/', (req, res) => {
-  Child.find({}, (err, children) => {
-    if (err) {
-      return res.send(err);
-    }
-
-    if (!children) {
-      return res.sendStatus(404);
-    }
-
-    var response = children.map(child => {
+  models.child.findAll().then(children => {
+    return children.map(child => {
       return {
-        _id: child._id,
-        name: child.name,
+        id: child.id,
+        firstName: child.firstName,
+        lastName: child.lastName,
         birthday: strftime('%Y-%m-%d', child.birthday),
         sex: child.sex
-      };
+      }
     });
-    res.json(response);
+  }).then(children => {
+    res.json(children);
   });
 });
 
 router.get('/:id', (req, res) => {
-  var id = req.params.id;
-  Child.findById(id, (err, child) => {
-    if (err) {
-      return res.send(err);
-    }
-
-    if (!child) {
-      return res.sendStatus(404);
-    }
-
-    Card.find({ children: id }, '_id owner children', (err, cards) => {
-      res.json({
-        _id: child._id,
-        name: child.name,
-        birthday: strftime('%Y-%m-%d', child.birthday),
-        sex: child.sex,
-        cards: cards
-      });
-    });
+  const id = req.params.id;
+  models.child.findById(id).then(child => {
+    return {
+      id: child.id,
+      firstName: child.firstName,
+      lastName: child.lastName,
+      birthday: strftime('%Y-%m-%d', child.birthday),
+      sex: child.sex
+    };
+  }).then(child => {
+    res.json(child);
   });
 });
 
 router.post('/', (req, res) => {
-  var child = new Child(req.body);
-  child.save(err => {
-    if (err) {
-      return res.send(err);
-    }
+  models.child.create(req.body).then(child => {
     res.json({
-      _id: child._id,
-      name: child.name,
+      firstName: child.firstName,
+      lastName: child.lastName,
       birthday: strftime('%Y-%m-%d', child.birthday),
       sex: child.sex
     });
+  }).catch(err => {
+    return res.send(err);
   });
 });
 
 router.put('/:id', (req, res) => {
-  var id = req.params.id;
-  Child.findByIdAndUpdate(id, req.body, {new: true}, (err, child) => {
-    if (err) {
-      return res.send(err);
-    }
-
-    if (!child) {
-      return res.sendStatus(404);
-    }
-
-    Card.find({ children: id }, '_id owner children', (err, cards) => {
-      res.json({
-        _id: child._id,
-        name: child.name,
-        birthday: strftime('%Y-%m-%d', child.birthday),
-        sex: child.sex
-      });
+  const id = req.params.id;
+  return sequelize.transaction({}, t => {
+    models.child.findById(id, {transaction: t}).then(child => {
+      return child.updates(req.body);
     });
+  }).then(child => {
+    res.json({
+      id: child.id,
+      firstName: child.firstName,
+      lastName: child.lastName,
+      birthday: strftime('%Y-%m-%d', child.birthday),
+      sex: child.sex
+    });
+  }).catch(function(err) {
+    return res.send(err);
   });
 });
 
 router.delete('/:id', (req, res) => {
-  Child.findByIdAndRemove(req.params.id, err => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.sendStatus(200);
-    }
+  const id = req.params.id;
+  return sequelize.transaction({}, t => {
+    models.child.findById(id, {transaction: t}).then(child => {
+      return child.destroy({transaction: t});
+    });
+  }).then(() => {
+    res.sendStatus(200);
+  }).catch(function(err) {
+    return res.send(err);
   });
 });
 
