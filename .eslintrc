@@ -11,8 +11,7 @@
     "es6": true,
     "node": true,
     "browser": true,
-    "mocha": true,
-    "jquery": true
+    "mocha": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
