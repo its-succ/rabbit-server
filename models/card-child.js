@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
-  const child = sequelize.define('child', {
+  const child = sequelize.define('cardChild', {
     first_name: {
       allowNull: false,
       type: DataTypes.STRING
@@ -21,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function (models) {
-        child.belongsToMany(models.card, { through: 'cardChild', foreignKey: 'childId' });
       }
     }
   });

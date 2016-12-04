@@ -36,7 +36,10 @@
     "mithril": "^0.2.3",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
+    "pg": "6.1.0",
+    "pg-hstore": "2.3.2",
     "purecss": "^0.6.0",
+    "sequelize": "3.27.0",
     "serve-favicon": "^2.3.0",
     "strftime": "^0.9.2"
   },
@@ -52,6 +55,7 @@
     "mocha": "^3.1.2",
     "npm-run-all": "^3.1.1",
     "rimraf": "^2.4.4",
+    "sequelize-cli": "2.4.0",
     "supertest": "^2.0.0",
     "watchify": "^3.7.0"
   }

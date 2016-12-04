@@ -1,10 +1,18 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
 
-var schema = Schema({
-  _id: String,
-  owner: String,
-  children: [{type: Schema.Types.ObjectId, ref: 'Child'}]
-});
+module.exports = function (sequelize, DataTypes) {
+  const card = sequelize.define('card', {
+    card_number: {
+      allowNull: false,
+      type: DataTypes.STRING
+    }
+  }, {
+    classMethods: {
+      associate: function (models) {
+        card.belongsToMany(models.child, { through: 'cardChild', foreignKey: 'cardId' });
+      }
+    }
+  });
 
-module.exports = mongoose.model('Card', schema);
+  return card;
+};
