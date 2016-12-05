@@ -3,19 +3,11 @@ node_js:
   - v7
   - v6
   - v4
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - mongodb-3.0-precise
-    packages:
-      - g++-4.8
-      - mongodb-org-server
-before_install:
-  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then export CXX=g++-4.8; fi
-  - $CXX --version
 services:
-  - mongodb
+  - postgresql
+before_script:
+  - psql -c 'create database rabbit_ci_test;' -U postgres
+  - cp config/database_travis.yml config/database.yml
 notifications:
   webhooks:
     urls:
