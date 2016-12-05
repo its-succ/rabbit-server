@@ -1,6 +1,6 @@
 'use strict';
 
-const tableName = 'card';
+const tableName = 'cards';
 
 module.exports = {
   up: function (queryInterface, Sequelize) {

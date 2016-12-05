@@ -8,12 +8,12 @@ const app = require('../../app');
 const models = require('../../models');
 
 describe('API /api/children', () => {
-  before(() => {
+  beforeEach(() => {
     this.Child = models.child;
     return sequelizeFixtures.loadFile('test/routes/fixtures/child.test.yml', models);
   });
 
-  after(() => {
+  afterEach(() => {
     return this.Child.destroy({where: {id: {$ne: null}}, force: true});
   });
 
