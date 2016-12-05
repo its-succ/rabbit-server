@@ -34,7 +34,7 @@
     "express": "^4.13.3",
     "js-yaml": "^3.7.0",
     "mithril": "^0.2.3",
-    "mongoose": "^4.3.6",
+    "mongoose": "^4.5.9",
     "morgan": "^1.6.1",
     "purecss": "^0.6.0",
     "serve-favicon": "^2.3.0",
