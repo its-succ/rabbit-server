@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "rabbit",
+    "password": "rabbit",
+    "database": "rabbit",
+    "host": "192.168.33.13",
+    "dialect": "postgres"
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "db.test.sqlite"
+  },
+  "production": {
+    "username": "rabbit",
+    "password": "rabbit",
+    "database": "rabbit",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

@@ -1,59 +1,62 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const models = require('../models');
 
-var Card = require('../models/Card');
+const sequelize = models.sequelize;
+const router = express.Router();
+
 
 // カード全件取得
 router.get('/', (req, res) => {
-  Card.find((err, cards) => {
-    if (err) {
-      return res.send(err);
-    }
-    res.send(cards);
+  models.card.findAll().then(cards => {
+    res.json(cards);
+  }).catch(err => {
+    res.status(500).end(err);
   });
 });
 
 // カード１件取得
 router.get('/:id', (req, res) => {
-  Card.findOne({_id:req.params.id}, (err, cards) => {
-    if (err) {
-      return res.send(err);
-    }
-    res.send(cards);
+  models.card.findById(req.params.id).then(card => {
+    res.json(card);
+  }).catch(err => {
+    res.status(500).end(err);
   });
 });
 
 // カード登録
 router.post('/', (req, res) => {
-  var card = new Card(req.body);
-  card.save(err => {
-    if (err) {
-      return res.send(err);
-    }
-    res.send(card);
+  models.card.create(req.body).then(card => {
+    res.json(card);
+  }).catch(err => {
+    return res.send(err);
   });
 });
 
 // カード更新
 router.put('/:id', (req, res) => {
-  var card = new Card(req.body);
-  card._id = req.params.id;
-  Card.findOneAndUpdate({_id:req.params.id}, card, {new: true}, (err, card) => {
-    if (err) {
-      return res.send(err);
-    }
-    res.send(card);
+  const id = req.params.id;
+  return sequelize.transaction(t => {
+    return models.card.findById(id, {transaction: t}).then(card => {
+      return card.update(req.body, {transaction: t});
+    });
+  }).then(card => {
+    res.json(card);
+  }).catch(function(err) {
+    return res.send(err);
   });
 });
 
 // カード削除
 router.delete('/:id', (req, res) => {
-  Card.findOne({_id:req.params.id}, (err, card) => {
-    if (err) {
-      return res.send(err);
-    }
-    card.remove();
-    res.end();
+  const id = req.params.id;
+  return sequelize.transaction(t => {
+    return models.card.findById(id, {transaction: t}).then(card => {
+      return card.destroy({transaction: t});
+    });
+  }).then(() => {
+    res.status(200).end();
+  }).catch(function(err) {
+    return res.send(err);
   });
 });
 

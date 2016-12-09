@@ -1,2 +1,0 @@
-db:
-  host: 'mongodb://192.168.33.13/test'

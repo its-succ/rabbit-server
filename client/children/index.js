@@ -1,11 +1,13 @@
 'use strict';
 
 const m = require('mithril');
+const Child = require('../model/child');
 
 class ChildListModel {
   constructor() {
     this.id = m.prop('');
-    this.name = m.prop('');
+    this.firstName = m.prop('');
+    this.lastName = m.prop('');
     this.birthday = m.prop('');
     this.sex = m.prop('');
     this.childList = m.prop([]);
@@ -15,7 +17,7 @@ class ChildListModel {
     this.childList = m.request({
       method: 'GET',
       url: '/api/children',
-      initialValue: []
+      type: Child
     });
   }
 }
@@ -40,7 +42,7 @@ class ChildListController {
     return m.request({
       method: 'DELETE',
       url: `/api/children/${id}`
-    }).then(data => {
+    }).then(() => {
       return this.vm.loadChildList();
     });
   }
@@ -57,7 +59,8 @@ const Component = {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>名前</th>
+                        <th>姓</th>
+                        <th>名</th>
                         <th>性別</th>
                         <th>誕生日</th>
                         <th></th>
@@ -67,14 +70,15 @@ const Component = {
                 <tbody>
                   {ctrl.vm.childList().map(child => {
                     return  <tr>
-                              <td>{child._id}</td>
-                              <td>{child.name}</td>
-                              <td>{child.sex}</td>
-                              <td>{formatDate(new Date(child.birthday), 'YYYY/MM/DD')}</td>
+                              <td>{child.id()}</td>
+                              <td>{child.firstName()}</td>
+                              <td>{child.lastName()}</td>
+                              <td>{child.sex()}</td>
+                              <td>{formatDate(new Date(child.birthday()), 'YYYY/MM/DD')}</td>
                               <td>
-                                <button class="pure-button" onclick={ctrl.edit.bind(ctrl, child._id)}>編集</button>
+                                <button class="pure-button" onclick={ctrl.edit.bind(ctrl, child.id())}>編集</button>
                                 { }
-                                <button class="pure-button" onclick={ctrl.delete.bind(ctrl, child._id)}>削除</button>
+                                <button class="pure-button" onclick={ctrl.delete.bind(ctrl, child.id())}>削除</button>
                               </td>
                             </tr>;
                   })}
