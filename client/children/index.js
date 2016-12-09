@@ -71,8 +71,8 @@ const Component = {
                   {ctrl.vm.childList().map(child => {
                     return  <tr>
                               <td>{child.id()}</td>
-                              <td>{child.firstName()}</td>
                               <td>{child.lastName()}</td>
+                              <td>{child.firstName()}</td>
                               <td>{child.sex()}</td>
                               <td>{formatDate(new Date(child.birthday()), 'YYYY/MM/DD')}</td>
                               <td>
