@@ -54,7 +54,7 @@
     "mocha": "^3.1.2",
     "npm-run-all": "^3.1.1",
     "rimraf": "^2.4.4",
-    "sequelize-cli": "2.4.0",
+    "sequelize-cli": "2.5.1",
     "sequelize-fixtures": "0.5.6",
     "sqlite3": "3.1.8",
     "supertest": "^2.0.0",
