@@ -5,11 +5,6 @@ const Child = require('../model/child');
 
 class ChildListModel {
   constructor() {
-    this.id = m.prop('');
-    this.firstName = m.prop('');
-    this.lastName = m.prop('');
-    this.birthday = m.prop('');
-    this.sex = m.prop('');
     this.childList = m.prop([]);
   }
 

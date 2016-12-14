@@ -2,12 +2,17 @@
 <html>
   <head>
     <title><%= title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/node_modules/purecss/build/pure-min.css' />
+    <link rel='stylesheet' href='/stylesheets/layouts/side-menu.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="layout">
+        <div id="side-menu"></div>
+        <div id="main"></div>
+    </div>
     <script src="/javascripts/bundle.js"></script>
-
   </body>
 </html>

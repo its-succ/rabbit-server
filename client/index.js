@@ -1,7 +1,8 @@
 'use strict';
 
 const m = require('mithril');
-const Child = require('./children');
+const SideMenu = require('./side-menu');
+const Children = require('./children');
 const NewChild = require('./children/new');
 
 const Home = {
@@ -13,8 +14,9 @@ const Home = {
   }
 };
 
-m.route(document.getElementById('root'), '/children', {
+m.mount(document.getElementById('side-menu'), SideMenu);
+m.route(document.getElementById('main'), '/children', {
   '/': Home,
-  '/children': Child,
+  '/children': Children,
   '/children/:childId': NewChild
 });
