@@ -1,15 +1,11 @@
 'use strict';
 
 const m = require('mithril');
-const Child = require('../model/child');
+const BasePage = require('../base-page');
+const Child = require('../../model/child');
 
 class ChildListModel {
   constructor() {
-    this.id = m.prop('');
-    this.firstName = m.prop('');
-    this.lastName = m.prop('');
-    this.birthday = m.prop('');
-    this.sex = m.prop('');
     this.childList = m.prop([]);
   }
 
@@ -24,8 +20,9 @@ class ChildListModel {
 
 const model = new ChildListModel();
 
-class ChildListController {
+class ChildListController extends BasePage.BasePageController {
   constructor() {
+    super();
     this.vm = model;
     this.vm.loadChildList();
   }
@@ -46,13 +43,8 @@ class ChildListController {
       return this.vm.loadChildList();
     });
   }
-}
 
-
-//childList:{JSON.stringify(ctrl.vm.childList())}
-const Component = {
-  controller: ChildListController,
-  view: ctrl => {
+  contentView(ctrl) {
     return <div>
             <h1>園児一覧</h1>
             <table class="pure-table">
@@ -88,7 +80,12 @@ const Component = {
               <button class="pure-button" onclick={ctrl.add.bind(ctrl)}>追加</button>
             </div>
            </div>;
-  }
+    }
+}
+
+const Component = {
+  controller: ChildListController,
+  view: BasePage.view
 };
 
 var formatDate = function (date, format) {
@@ -106,4 +103,5 @@ var formatDate = function (date, format) {
   }
   return format;
 };
+
 module.exports =Component;

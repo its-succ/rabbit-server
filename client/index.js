@@ -1,20 +1,12 @@
 'use strict';
 
 const m = require('mithril');
-const Child = require('./children');
-const NewChild = require('./children/new');
-
-const Home = {
-  view: () => {
-    return <div>
-            <h1>Rabbit</h1>
-            <p>Welcome to Rabbit</p>
-           </div>;
-  }
-};
+const Home = require('./pages/home');
+const Children = require('./pages/children');
+const NewChild = require('./pages/children/new');
 
 m.route(document.getElementById('root'), '/children', {
   '/': Home,
-  '/children': Child,
+  '/children': Children,
   '/children/:childId': NewChild
 });

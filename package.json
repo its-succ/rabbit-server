@@ -37,6 +37,7 @@
     "morgan": "^1.6.1",
     "pg": "6.1.1",
     "pg-hstore": "2.3.2",
+    "pubsub-js": "1.5.4",
     "purecss": "^0.6.0",
     "sequelize": "3.27.0",
     "serve-favicon": "^2.3.0",

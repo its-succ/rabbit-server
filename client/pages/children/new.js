@@ -1,10 +1,12 @@
 'use strict';
 
 const m = require('mithril');
-const Child = require('../model/child');
+const BasePage = require('../base-page');
+const Child = require('../../model/child');
 
-class AddChildController {
+class AddChildController extends BasePage.BasePageController {
   constructor() {
+    super();
     const id = m.route.param("childId");
     if (id === 'new') {
       this.child = m.prop(new Child({sex: 'M'}));
@@ -19,26 +21,8 @@ class AddChildController {
       m.route('/children');
     });
   }
-}
 
-function createSexSelect(child) {
-  const manProps = {};
-  if (child.sex() === 'M') {
-    manProps.selected = 'selected';
-  }
-  const femaleProps = {};
-  if (child.sex() === 'F') {
-    femaleProps.selected = 'selected';
-  }
-  return <select id="sex" placeholder="性別" onchange={m.withAttr('value', child.sex)}>
-    <option value="M" {...manProps}>男</option>
-    <option value="F" {...femaleProps}>女</option>
-  </select>;
-}
-
-const New = {
-  controller: AddChildController,
-  view: ctrl => {
+  contentView(ctrl) {
     const child = ctrl.child();
     return <div>
             <h1>{child.id() ? '編集' : '追加'}</h1>
@@ -71,6 +55,26 @@ const New = {
         </form>
       </div>;
   }
+}
+
+function createSexSelect(child) {
+  const manProps = {};
+  if (child.sex() === 'M') {
+    manProps.selected = 'selected';
+  }
+  const femaleProps = {};
+  if (child.sex() === 'F') {
+    femaleProps.selected = 'selected';
+  }
+  return <select id="sex" placeholder="性別" onchange={m.withAttr('value', child.sex)}>
+    <option value="M" {...manProps}>男</option>
+    <option value="F" {...femaleProps}>女</option>
+  </select>;
+}
+
+const New = {
+  controller: AddChildController,
+  view: BasePage.view
 };
 
 module.exports = New;
