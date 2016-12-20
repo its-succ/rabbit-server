@@ -14,7 +14,8 @@
     "build:js": "browserify client/index.js -t babelify -o public/javascripts/bundle.js",
     "build": "npm-run-all clean initialize build:*",
     "watch:js": "watchify client/index.js -t babelify -o public/javascripts/bundle.js -v",
-    "watch": "npm-run-all clean initialize watch:*"
+    "watch": "npm-run-all clean initialize watch:*",
+    "db:migrate": "sequelize db:migrate --config config/database.json"
   },
   "repository": {
     "type": "git",

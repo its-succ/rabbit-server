@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
-  const child = sequelize.define('child', {
+  const protector = sequelize.define('protector', {
     firstName: {
       allowNull: false,
       type: DataTypes.STRING
@@ -13,19 +13,14 @@ module.exports = function (sequelize, DataTypes) {
     sex: {
       allowNull: false,
       type: DataTypes.STRING
-    },
-    birthday: {
-      allowNull: false,
-      type: DataTypes.DATE
     }
   }, {
     classMethods: {
       associate: function (models) {
-        child.belongsToMany(models.card, { through: 'cardChild', foreignKey: 'childId' });
-        child.belongsToMany(models.protector, { through: 'protectorChildRelationship', foreignKey: 'childId' });
+        protector.belongsToMany(models.child, { through: 'protectorChildRelationship', foreignKey: 'protectorId' });
       }
     }
   });
 
-  return child;
+  return protector;
 };

@@ -1,0 +1,5 @@
+fixtures:
+  - model: relationship
+    data:
+      id: -1
+      name: 母親

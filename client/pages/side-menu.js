@@ -7,6 +7,10 @@ const menus = [
   {
     path: '/children',
     content: '園児一覧'
+  },
+  {
+    path: '/relationships',
+    content: '続柄一覧'
   }
 ];
 
