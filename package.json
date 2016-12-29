@@ -41,7 +41,7 @@
     "purecss": "^0.6.0",
     "sequelize": "3.28.0",
     "serve-favicon": "^2.3.0",
-    "strftime": "^0.9.2"
+    "strftime": "^0.10.0"
   },
   "devDependencies": {
     "babel-plugin-mjsx": "^4.1.1",
