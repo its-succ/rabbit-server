@@ -6,3 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
+
+.error-message {
+  color: white;
+  background: red;
+  border-radius: 2px;
+  padding: 5px;
+}

@@ -1,14 +1,17 @@
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
-  const child = sequelize.define('cardChild', {
+  const relationship = sequelize.define('relationship', {
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING
+    }
   }, {
-    timestamps: false,
     classMethods: {
       associate: function (models) {
       }
     }
   });
 
-  return child;
+  return relationship;
 };
