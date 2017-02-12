@@ -1,22 +1,23 @@
 'use strict';
 
 const m = require('mithril');
+const prop = require("mithril/stream");
 const Relationship = require('../../model/relationship');
 const BasePage = require('../base-page');
 
 class RelationshipViewModel {
   constructor() {
-    this.relationships = m.prop([]);
-    this.error = m.prop();
+    this.relationships = prop([]);
+    this.error = prop();
   }
 
   loadRelationships() {
     this.error(undefined);
-    this.relationships = m.request({
+    m.request({
       method: 'GET',
       url: '/api/relationships',
       type: Relationship
-    });
+    }).then(this.relationships);
   }
 
   delete(id) {
@@ -31,15 +32,18 @@ class RelationshipViewModel {
   }
 }
 
-class RelationshipsController extends BasePage.BasePageController {
+class RelationshipsPage extends BasePage {
   constructor() {
     super();
+  }
+
+  oninit() {
     this.vm = new RelationshipViewModel();
     this.vm.loadRelationships();
   }
 
   edit(id) {
-    m.route(`/relationships/${id}`);
+    m.route.set(`/relationships/${id}`);
   }
 
   delete(id) {
@@ -47,10 +51,11 @@ class RelationshipsController extends BasePage.BasePageController {
   }
 
   add() {
-    m.route('/relationships/new');
+    m.route.set('/relationships/new');
   }
 
-  contentView(ctrl) {
+  contentView(vnode) {
+    const ctrl = vnode.state;
     const relationships = ctrl.vm.relationships();
     const error = ctrl.vm.error();
     return <div>
@@ -86,9 +91,4 @@ class RelationshipsController extends BasePage.BasePageController {
   }
 }
 
-module.exports = {
-  controller: RelationshipsController,
-  view: (ctrl, args, extras) => {
-    return BasePage.view(ctrl, args, extras);
-  }
-};
+module.exports = RelationshipsPage;

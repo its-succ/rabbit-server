@@ -1,28 +1,32 @@
 'use strict';
 
 const m = require('mithril');
+const prop = require("mithril/stream");
 const BasePage = require('../base-page');
 const Child = require('../../model/child');
 
-class AddChildController extends BasePage.BasePageController {
+class AddChild extends BasePage {
   constructor() {
     super();
+  }
+
+  oninit() {
     const id = m.route.param("childId");
-    if (id === 'new') {
-      this.child = m.prop(new Child({sex: 'M'}));
-    } else {
-      this.child = Child.load(id);
+    this.child = prop(new Child({sex: 'M'}));
+    if (id !== 'new') {
+      Child.load(id).then(this.child);
     }
   }
 
   save() {
     return this.child().save()
     .then(() => {
-      m.route('/children');
+      m.route.set('/children');
     });
   }
 
-  contentView(ctrl) {
+  contentView(vnode) {
+    const ctrl = vnode.state;
     const child = ctrl.child();
     return <div>
             <h1>{child.id() ? '編集' : '追加'}</h1>
@@ -72,9 +76,4 @@ function createSexSelect(child) {
   </select>;
 }
 
-const New = {
-  controller: AddChildController,
-  view: BasePage.view
-};
-
-module.exports = New;
+module.exports = AddChild;

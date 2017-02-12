@@ -1,12 +1,13 @@
 'use strict';
 
+const m = require('mithril');
 const BasePage = require('../base-page');
 
-class HomeController extends BasePage.BasePageController {
+class HomePage extends BasePage {
   constructor() {
     super();
   }
-  contentView(ctrl) {
+  contentView(vnode) {
     return <div class="content">
       <h1>Rabbit</h1>
       <p>Welcome to Rabbit</p>
@@ -14,9 +15,4 @@ class HomeController extends BasePage.BasePageController {
   }
 }
 
-module.exports = {
-  controller: HomeController,
-  view: (ctrl, args, extras) => {
-    return BasePage.view(ctrl, args, extras);
-  }
-};
+module.exports = HomePage;

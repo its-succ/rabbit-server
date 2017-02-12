@@ -1,28 +1,32 @@
 'use strict';
 
 const m = require('mithril');
+const prop = require("mithril/stream");
 const BasePage = require('../base-page');
 const Relationship = require('../../model/relationship');
 
-class RelationshipController extends BasePage.BasePageController {
+class RelationshipPage extends BasePage {
   constructor() {
     super();
+  }
+
+  oninit() {
     const id = m.route.param("relationshipId");
-    if (id === 'new') {
-      this.relationship = m.prop(new Relationship());
-    } else {
-      this.relationship = Relationship.load(id);
+    this.relationship = prop(new Relationship());
+    if (id !== 'new') {
+      Relationship.load(id).then(this.relationship);
     }
   }
 
   save() {
     return this.relationship().save()
     .then(() => {
-      m.route('/relationships');
+      m.route.set('/relationships');
     });
   }
 
-  contentView(ctrl) {
+  contentView(vnode) {
+    const ctrl = vnode.state;
     const relationship = ctrl.relationship();
     return <div>
             <h1>{relationship.id() ? '編集' : '追加'}</h1>
@@ -42,7 +46,4 @@ class RelationshipController extends BasePage.BasePageController {
   }
 }
 
-module.exports = {
-  controller: RelationshipController,
-  view: BasePage.view
-};
+module.exports = RelationshipPage;

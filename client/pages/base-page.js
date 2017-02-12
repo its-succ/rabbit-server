@@ -3,8 +3,9 @@
 const m = require('mithril');
 const pubsub = require('pubsub-js');
 const SideMenu = require('./side-menu');
+const SideMenuComponent = new SideMenu();
 
-class BasePageController {
+class BasePage {
   constructor() {
     this.active = false;
     pubsub.subscribe('side-menu-active', (msg, data) => {
@@ -18,17 +19,16 @@ class BasePageController {
   hideSideMenu() {
     SideMenu.hideSideMenu();
   }
-}
 
-module.exports = {
-  controller: BasePageController,
-  view: (ctrl, args, extras) => {
+  view(vnode) {
+    const ctrl = vnode.state;
     return <div id="layout" class={SideMenu.toggleClass([], ctrl.active)}>
-        <SideMenu/>
+        <SideMenuComponent/>
         <div id="main" onclick={ctrl.hideSideMenu}>
-          {ctrl.contentView(ctrl, args, extras)}
+          {ctrl.contentView(vnode)}
         </div>
     </div>;
   }
-};
-module.exports.BasePageController = BasePageController;
+}
+
+module.exports = BasePage;

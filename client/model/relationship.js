@@ -1,6 +1,7 @@
 'use strict';
 
 const m = require('mithril');
+const prop = require("mithril/stream");
 
 class Relationship {
   constructor(data) {
@@ -9,8 +10,8 @@ class Relationship {
 
   reflect(data) {
     data = data || {};
-    this.id = m.prop(data.id);
-    this.name = m.prop(data.name || '');
+    this.id = prop(data.id);
+    this.name = prop(data.name || '');
   }
 
   static load(id) {

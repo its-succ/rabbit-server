@@ -8,9 +8,9 @@ const Relationships = require('./pages/relationships');
 const NewRelationship = require('./pages/relationships/new');
 
 m.route(document.getElementById('root'), '/', {
-  '/': Home,
-  '/children': Children,
-  '/children/:childId': NewChild,
-  '/relationships': Relationships,
-  '/relationships/:relationshipId': NewRelationship
+  '/': new Home(),
+  '/children': new Children(),
+  '/children/:childId': new NewChild(),
+  '/relationships': new Relationships(),
+  '/relationships/:relationshipId': new NewRelationship()
 });
