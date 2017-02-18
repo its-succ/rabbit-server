@@ -1,38 +1,44 @@
 'use strict';
 
 const m = require('mithril');
+const prop = require("mithril/stream");
 const BasePage = require('../base-page');
 const Child = require('../../model/child');
 
 class ChildListModel {
   constructor() {
-    this.childList = m.prop([]);
+    this.childList = prop([]);
   }
 
   loadChildList() {
-    this.childList = m.request({
+    return m.request({
       method: 'GET',
       url: '/api/children',
       type: Child
+    }).then(children => {
+      this.childList(children);
     });
   }
 }
 
 const model = new ChildListModel();
 
-class ChildListController extends BasePage.BasePageController {
+class ChildList extends BasePage {
   constructor() {
     super();
     this.vm = model;
+  }
+
+  oninit() {
     this.vm.loadChildList();
   }
 
   add() {
-    m.route('/children/new');
+    m.route.set('/children/new');
   }
 
   edit(id) {
-    m.route(`/children/${id}`);
+    m.route.set(`/children/${id}`);
   }
 
   delete(id) {
@@ -44,7 +50,8 @@ class ChildListController extends BasePage.BasePageController {
     });
   }
 
-  contentView(ctrl) {
+  contentView(vnode) {
+    const ctrl = vnode.state;
     return <div>
             <h1>園児一覧</h1>
             <table class="pure-table">
@@ -83,11 +90,6 @@ class ChildListController extends BasePage.BasePageController {
     }
 }
 
-const Component = {
-  controller: ChildListController,
-  view: BasePage.view
-};
-
 var formatDate = function (date, format) {
   if (!format) format = 'YYYY-MM-DD hh:mm:ss.SSS';
   format = format.replace(/YYYY/g, date.getFullYear());
@@ -104,4 +106,4 @@ var formatDate = function (date, format) {
   return format;
 };
 
-module.exports =Component;
+module.exports = ChildList;

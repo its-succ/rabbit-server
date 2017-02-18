@@ -1,6 +1,7 @@
 'use strict';
 
 const m = require('mithril');
+const prop = require("mithril/stream");
 
 class Child {
   constructor(data) {
@@ -9,11 +10,11 @@ class Child {
 
   reflect(data) {
     data = data || {};
-    this.id = m.prop(data.id);
-    this.firstName = m.prop(data.firstName || '');
-    this.lastName = m.prop(data.lastName || '');
-    this.birthday = m.prop(data.birthday || '');
-    this.sex = m.prop(data.sex || '');
+    this.id = prop(data.id);
+    this.firstName = prop(data.firstName || '');
+    this.lastName = prop(data.lastName || '');
+    this.birthday = prop(data.birthday || '');
+    this.sex = prop(data.sex || '');
   }
 
   static load(id) {

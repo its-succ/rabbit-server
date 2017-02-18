@@ -25,7 +25,7 @@ function hideSideMenu() {
   pubsub.publishSync('side-menu-active', false);
 }
 
-class SideMenuController {
+class SideMenu {
   constructor() {
     this.active = false;
     pubsub.subscribe('side-menu-active', (msg, data) => {
@@ -36,23 +36,20 @@ class SideMenuController {
     this.active = !this.active;
     pubsub.publishSync('side-menu-active', this.active);
   }
-}
-
-const SideMenu = {
-  controller: SideMenuController,
-  view: function(ctrl) {
-    const currentPath = m.route();
+  view(vnode) {
+    const ctrl = vnode.state;
+    const currentPath = m.route.get();
     return <div>
       <a id="menuLink" class={toggleClass(['menu-link'], ctrl.active)} onclick={ctrl.toggleAll.bind(ctrl)}>
         <span></span>
       </a>
       <div id="menu" class={toggleClass([], ctrl.active)} >
         <div class="pure-menu">
-          <a class="pure-menu-heading" href="/" config={m.route}>Rabbit</a>
+          <a class="pure-menu-heading" href="/" oncreate={m.route.link}>Rabbit</a>
           <ul class="pure-menu-list">
             {menus.map(menu => {
               return <li class={currentPath === menu.path ? 'menu-item-divided pure-menu-selected' : 'pure-menu-item'}>
-                <a href={menu.path} class="pure-menu-link" config={m.route}>{menu.content}</a>
+                <a href={menu.path} class="pure-menu-link" oncreate={m.route.link}>{menu.content}</a>
               </li>;
             })}
           </ul>
@@ -61,7 +58,7 @@ const SideMenu = {
       </div>
     ;
   }
-};
+}
 
 SideMenu.toggleClass = toggleClass;
 SideMenu.hideSideMenu = hideSideMenu;
