@@ -3,7 +3,6 @@
 const m = require('mithril');
 const pubsub = require('pubsub-js');
 const SideMenu = require('./side-menu');
-const SideMenuComponent = new SideMenu();
 
 class BasePage {
   constructor() {
@@ -23,7 +22,7 @@ class BasePage {
   view(vnode) {
     const ctrl = vnode.state;
     return <div id="layout" class={SideMenu.toggleClass([], ctrl.active)}>
-        <SideMenuComponent/>
+        <SideMenu/>
         <div id="main" onclick={ctrl.hideSideMenu}>
           {ctrl.contentView(vnode)}
         </div>
