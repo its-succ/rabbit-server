@@ -9,6 +9,10 @@ const menus = [
     content: '園児一覧'
   },
   {
+    path: '/protectors',
+    content: '保護者一覧'
+  },
+  {
     path: '/relationships',
     content: '続柄一覧'
   }
