@@ -1,10 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var adminUsers = sequelize.define('adminUser', {
-    user_name: {
+    userName: {
       allowNull: false,
       type: DataTypes.STRING
-    },last_name: {
+    },
+    lastName: {
       allowNull: false,
       type: DataTypes.STRING
     },
