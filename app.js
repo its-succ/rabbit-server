@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 //var config = require('config');
+var passport = require('passport')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -12,6 +13,7 @@ var children = require('./routes/children');
 var relationships = require('./routes/relationships');
 var protectors = require('./routes/protectors');
 var cards = require('./routes/cards');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -27,8 +29,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/node_modules',  express.static(__dirname + '/node_modules'));
+app.use(passport.initialize());
 
-app.use('/', routes);
+app.use('/', login);
+app.use('/index', routes);
 app.use('/users', users);
 app.use('/api/children', children);
 app.use('/api/relationships', relationships);
